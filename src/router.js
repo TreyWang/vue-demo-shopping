@@ -6,12 +6,12 @@ import IndexPage from './page/index.vue'
 
 Vue.use(VueRouter)
 
-const routers = [
+const routes = [
   {path: '/', component: IndexPage}
 ]
 
 export default new VueRouter({
-  mode: 'history',
+  model: 'history',
   base: __dirname,
-  routers
+  routes
 })

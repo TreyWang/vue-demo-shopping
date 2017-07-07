@@ -2,7 +2,7 @@
   <div>
     <div class="app-head">
       <div class="app-head-inner">
-        <router-link :to="{path: '/'}">
+        <router-link to="/">
           <img src="../assets/logo.png">
         </router-link>
         <div class="head-nav">
@@ -17,9 +17,7 @@
       </div>
     </div>
     <div class="app-content">
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <router-view></router-view>
     </div>
     <div class="app-foot">
       <p>© 2017 Wang MIT</p>
