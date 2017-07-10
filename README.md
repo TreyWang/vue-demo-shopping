@@ -22,15 +22,15 @@ npm run build --report
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-# 使用axios做异步数据请求操作
+### 使用axios做异步数据请求操作
 
-## 引入axios
+#### 引入axios
 ```
 npm install --save-dev axios
 npm install --save-dev vue-axios
 ```
 
-## 配置axios
+#### 配置axios
 ```
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -40,7 +40,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.baseURL = 'http://localhost:8081/';
 ```
 
-## POST传参序列化拦截器
+#### POST传参序列化拦截器
 ```
 axios.interceptors.request.use((config) => {
   if(config.method  === 'post'){
@@ -52,7 +52,7 @@ axios.interceptors.request.use((config) => {
 });
 ```
 
-## 使用demo
+#### 使用demo
 ```
 # get
 this.axios.get(uri
@@ -73,14 +73,14 @@ this.axios.post(uri,{data: data
 # 省略PUT,DELETE
 ```
 
-# 使用json-server模拟数据，测试前端异步数据提取
+### 使用json-server模拟数据，测试前端异步数据提取
 
-## 引入json-server
+#### 引入json-server
 ```
 npm install --save-dev json-server
 ```
 
-## 配置json-server
+#### 配置json-server
 在build/dev-server.js中配置
 ```
 # json-server数据测试
@@ -98,7 +98,7 @@ apiServer.listen("8081", () => {
 })
 ```
 
-## 写入json数据源
+#### 写入json数据源
 在根目录下编写db.json数据源
 db.json例：
 ```
@@ -130,7 +130,7 @@ db.json例：
 
 注：默认情况下，异步请求uri为json数据的key值，如上述数据url为http://localhost:8081/news
 
-##运行
+#### 运行
 ```
 npm run dev # 启动
 ```
