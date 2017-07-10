@@ -4,15 +4,41 @@
       <div class="index-left">
         <div class="index-left-block">
           <h2>全部产品</h2>
-          <template for="item in productList">
-            <h3>{{item.title}}</h3>
-            <ul>
-              <!--<li v-for="item in item.list">-->
-
-              <!--</li>-->
-            </ul>
-            <div class="hr"></div>
+          <template v-for="product in productList">
+              <h3>{{product.title}}</h3>
+              <ul>
+                <li v-for="item in product.list">
+                  <a :href="item.url" target="_blank">{{item.name}}</a>
+                  <span v-if="item.hot" class="hot-tag">HOT</span>
+                </li>
+              </ul>
+              <div  v-if="!product.last" class="hr"></div>
           </template>
+        </div>
+        <div class="index-left-block lastest-news">
+          <template>
+            <h2>最新消息</h2>
+            <ul>
+              <li v-for="news in newsList">
+                <a :href="news.url" target="_blank" v-text="news.title"></a>
+              </li>
+            </ul>
+          </template>
+        </div>
+      </div>
+      <div class="index-right">
+        <div class="index-board-list">
+          <div class="index-board-item"
+               v-for="(board, index) in boardList"
+               :class="[{'line-last': index % 2 !== 0 }, 'index-board-' + board.imageId]">
+            <div class="index-board-item-inner" :class="">
+              <h2>{{board.title}}</h2>
+              <p>{{board.description}}</p>
+              <div class="index-board-button">
+                <a href="" class="button">立即购买</a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -21,6 +47,16 @@
 
 <script>
   export default{
+    created(){
+      //创建成功加载数据
+      this.axios.get('news'
+      ).then(response => {
+        console.log(response.data);
+        this.newsList = response.data;
+      }).catch(error => {
+        console.log(error);
+      })
+    },
     data(){
         return{
             productList: {
@@ -48,6 +84,7 @@
                 },
                 app: {
                   title: '手机应用类',
+                  last: true,
                   list:[
                     {
                       name: '91助手',
@@ -68,13 +105,40 @@
                     }
                   ]
                 }
-            }
+            },
+            newsList : [],
+            boardList:[
+              {
+                title: '开放产品',
+                description: '开放商品是一款开放商品',
+                imageId: 'car',
+                saleout: false
+              },
+              {
+                title: '品牌营销',
+                description: '品牌营销帮助您的产品更好地找到定位',
+                imageId: 'earth',
+                saleout: false
+              },
+              {
+                title: '使命必达',
+                description: '使命必达快速迭代永远保持最前端的速度',
+                imageId: 'loud',
+                saleout: false
+              },
+              {
+                title: '勇攀高峰',
+                description: '帮您勇闯高峰,到达事业的顶峰',
+                imageId: 'hill',
+                saleout: false
+              }
+            ]
         }
     }
   }
 </script>
 
-<style scoped="scoped">
+<style scoped>
   .index-wrap {
     width: 1200px;
     margin: 0 auto;
@@ -168,5 +232,4 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
 </style>

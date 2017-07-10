@@ -21,6 +21,7 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
@@ -80,6 +81,20 @@ devMiddleware.waitUntilValid(() => {
 })
 
 var server = app.listen(port)
+
+// json-server数据测试
+const jsonServer = require('json-server')
+const apiServer = jsonServer.create()
+// 配置json数据源为根目录下的db.json
+const apiRouter = jsonServer.router('db.json')
+const middlewares = jsonServer.defaults()
+
+apiServer.use(middlewares)
+apiServer.use(apiRouter)
+//数据源端口8081
+apiServer.listen("8081", () => {
+  console.log('JSON Server is running')
+})
 
 module.exports = {
   ready: readyPromise,
