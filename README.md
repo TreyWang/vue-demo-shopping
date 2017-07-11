@@ -98,6 +98,39 @@ apiServer.listen("8081", () => {
 })
 ```
 
+### 配置拓展
+```
+var apiRouter = express.Router()
+var fs = require('fs')
+apiRouter.route('/:apiName')
+  .all(function (req, res) {
+    fs.readFile('./db.json', 'utf8', function (err, data) {
+      if (err) throw err
+      var data = JSON.parse(data)
+      if (data[req.params.apiName]) {
+        res.json(data[req.params.apiName])
+      }
+      else {
+        res.send('no such api name')
+      }
+
+    })
+  })
+
+apiServer.use(middlewares)
+apiServer.use(apiRouter)
+
+//数据源端口8081
+apiServer.listen(port + 1, (err) => {
+  if (err) {
+    console.log(err)
+    return
+  }
+  console.log('Listening at http://localhost:' + (port + 1) + '\n')
+})
+```
+
+
 #### 写入json数据源
 在根目录下编写db.json数据源
 db.json例：

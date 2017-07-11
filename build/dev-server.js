@@ -86,14 +86,35 @@ var server = app.listen(port)
 const jsonServer = require('json-server')
 const apiServer = jsonServer.create()
 // 配置json数据源为根目录下的db.json
-const apiRouter = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
+
+var apiRouter = express.Router()
+var fs = require('fs')
+apiRouter.route('/:apiName')
+  .all(function (req, res) {
+    fs.readFile('./db.json', 'utf8', function (err, data) {
+      if (err) throw err
+      var data = JSON.parse(data)
+      if (data[req.params.apiName]) {
+        res.json(data[req.params.apiName])
+      }
+      else {
+        res.send('no such api name')
+      }
+
+    })
+  })
 
 apiServer.use(middlewares)
 apiServer.use(apiRouter)
+
 //数据源端口8081
-apiServer.listen("8081", () => {
-  console.log('JSON Server is running')
+apiServer.listen(port + 1, (err) => {
+  if (err) {
+    console.log(err)
+    return
+  }
+  console.log('Listening at http://localhost:' + (port + 1) + '\n')
 })
 
 module.exports = {
