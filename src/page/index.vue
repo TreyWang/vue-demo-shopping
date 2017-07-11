@@ -65,7 +65,7 @@
     },
     methods: {
       doSomeThingOnSlideChange(index){
-        console.log('doSomeThingOnSlideChange run! index: ' + index);
+        //console.log('doSomeThingOnSlideChange run! index: ' + index);
       }
     },
     data(){

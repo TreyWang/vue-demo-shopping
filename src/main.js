@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import Layout from './components/layout.vue'
 import router from './router'
-import axios from 'axios'
+import store from './store'
 import VueAxios from 'vue-axios'
+import axios from 'axios'
+
 
 Vue.config.productionTip = false
 
@@ -28,5 +30,6 @@ axios.interceptors.request.use((config) => {
 new Vue({
   el: '#app',
   render: h => h(Layout),
-  router
+  router,
+  store
 })
