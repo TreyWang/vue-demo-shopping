@@ -28,7 +28,7 @@
     },
     methods: {
       closeDialog(){
-        this.$emit('close');
+        this.$emit('on-close');
       }
     }
 

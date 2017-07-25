@@ -36,9 +36,9 @@
           产品版本：
         </div>
         <div class="sales-board-line-right">
-          <v-mul-chooser
+          <v-multiple-chooser
             :selections="versionList"
-            @on-change="onParamChange('versions', $event)"></v-mul-chooser>
+            @on-change="onParamChange('versions', $event)"></v-multiple-chooser>
         </div>
       </div>
       <div class="sales-board-line">
@@ -113,14 +113,119 @@
 </template>
 
 <script>
-  export default {
+  import VSelection from '../../components/base/selection'
+  import VChooser from '../../components/base/chooser'
+  import VMultipleChooser from '../../components/base/multipleChooser'
+  import VCounter from '../../components/base/counter'
+  import MyDialog from '../../components/base/dialog'
+  import _ from 'lodash'
 
+  export default {
+    components: {
+      VSelection,
+      VChooser,
+      VMultipleChooser,
+      VCounter,
+      MyDialog
+    },
+    data(){
+      return{
+        buyNum: 0,
+        buyType: {},
+        versions: [],
+        period: {},
+        price: 0,
+        periodList: [
+          {
+            label: '半年',
+            value: 0
+          },
+          {
+            label: '一年',
+            value: 1
+          },
+          {
+            label: '三年',
+            value: 2
+          }
+        ],
+        versionList: [
+          {
+            label: '客户版',
+            value: 0
+          },
+          {
+            label: '代理商版',
+            value: 1
+          },
+          {
+            label: '专家版',
+            value: 2
+          }
+        ],
+        buyTypes: [
+          {
+            label: '入门版',
+            value: 0
+          },
+          {
+            label: '中级版',
+            value: 1
+          },
+          {
+            label: '高级版',
+            value: 2
+          }
+        ],
+        isShowPayDialog: false,
+        isShowErrDialog: false
+      }
+    },
+    methods: {
+      onParamChange(type, val){
+        this[type] = val;
+        this.getPrice();
+      },
+      getPrice(){
+        let buyVersionsArray = _.map(this.versions, (item) => {
+          return item.value
+        })
+        let reqParams = {
+          buyNumber: this.buyNum,
+          buyType: this.buyType.value,
+          period: this.period.value,
+          version: buyVersionsArray.join(',')
+        }
+
+        this.axios.post('price', reqParams
+        ).then(res => {
+          this.price = res.data.amount
+        }).catch(err => {
+            console.log(err);
+        })
+      },
+      showPayDialog () {
+        this.isShowPayDialog = true
+      },
+      hidePayDialog () {
+        this.isShowPayDialog = false;
+      },
+      hideErrDialog () {
+        this.isShowErrDialog = false
+      }
+    },
+    mounted(){
+      this.buyNum = 1
+      this.buyType = this.buyTypes[0]
+      this.versions = [this.versionList[0]]
+      this.period = this.periodList[0]
+      this.getPrice()
+    }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  <style scoped>
   .buy-dialog-title {
     font-size: 16px;
     font-weight: bold;

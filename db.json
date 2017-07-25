@@ -25,7 +25,7 @@
     "userName": "WangCong",
     "userId": 1
   },
-  "getPrice": {
+  "price": {
     "amount": 678
   },
   "createOrder": {

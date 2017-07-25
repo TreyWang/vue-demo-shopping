@@ -26,7 +26,8 @@ const routes = [
       {path: 'analysis', component: AnalysisPage},
       {path: 'count', component: CountPage},
       {path: 'publish', component: PublishPage}
-    ]
+    ],
+    redirect: '/detail/count'
   },
   {path: '*', component: Error404}
 ]

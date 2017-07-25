@@ -36,7 +36,7 @@
               <h2>{{board.title}}</h2>
               <p>{{board.description}}</p>
               <div class="index-board-button">
-                <a href="" class="button">立即购买</a>
+                <a href="#" class="button">立即购买</a>
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@
                   ]
                 }
             },
-            newsList : [],
+            newsList: [],
             boardList:[
               {
                 title: '开放产品',

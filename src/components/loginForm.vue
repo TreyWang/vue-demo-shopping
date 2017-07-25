@@ -76,7 +76,6 @@
       }
     },
     methods: {
-
       onLogin(){
         if(!this.userErrors.status || !this.passwordErrors.status){
           this.errorText = '存在错误信息';
