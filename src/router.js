@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 //pages
 import IndexPage from './page/index.vue'
 import DetailPage from './page/detail.vue'
+import OrderListPage from './page/orderList.vue'
 
 //404error
 import Error404 from './page/base/error404.vue'
@@ -13,6 +14,7 @@ import ForecastPage from './page/detail/forecast.vue'
 import AnalysisPage from './page/detail/analysis.vue'
 import CountPage from './page/detail/count.vue'
 import PublishPage from './page/detail/publish.vue'
+
 
 Vue.use(VueRouter)
 
@@ -29,6 +31,7 @@ const routes = [
     ],
     redirect: '/detail/count'
   },
+  {path: '/orderList', component: OrderListPage},
   {path: '*', component: Error404}
 ]
 

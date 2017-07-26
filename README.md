@@ -168,7 +168,9 @@ db.json例：
 npm run dev # 启动
 ```
 
+### 在awesome-vue中查询相关组件
 
+####github地址：https://github.com/vuejs/awesome-vue
 
 
 

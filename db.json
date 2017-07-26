@@ -25,13 +25,13 @@
     "userName": "WangCong",
     "userId": 1
   },
-  "price": {
+  "prices": {
     "amount": 678
   },
-  "createOrder": {
+  "orders": {
     "orderId": "6djk979"
   },
-  "getOrderList": {
+  "myOrders": {
     "list": [
       {
         "orderId": "ddj123",

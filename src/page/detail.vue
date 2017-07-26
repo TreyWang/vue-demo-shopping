@@ -24,6 +24,11 @@
           return{
             products: [
               {
+                name: '流量分析',
+                path: 'analysis',
+                active: false
+              },
+              {
                 name: '数据统计',
                 path: 'count',
                 icon: require('../assets/images/1.png'),
@@ -32,11 +37,6 @@
               {
                 name: '数据预测',
                 path: 'forecast',
-                active: false
-              },
-              {
-                name: '流量分析',
-                path: 'analysis',
                 active: false
               },
               {

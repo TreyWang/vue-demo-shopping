@@ -94,7 +94,10 @@
           <td>{{ buyType.label }}</td>
           <td>{{ period.label }}</td>
           <td>
-            <span v-for="item in versions">{{ item.label }}</span>
+            <span v-for="(item,index) in versions">
+              <span v-if="index !== 0">,</span>
+              {{ item.label }}
+            </span>
           </td>
           <td>{{ price }}</td>
         </tr>
@@ -118,6 +121,8 @@
   import VMultipleChooser from '../../components/base/multipleChooser'
   import VCounter from '../../components/base/counter'
   import MyDialog from '../../components/base/dialog'
+  import BankChooser from '../../components/bankChooser'
+  import CheckOrder from '../../components/checkOrder'
   import _ from 'lodash'
 
   export default {
@@ -126,7 +131,9 @@
       VChooser,
       VMultipleChooser,
       VCounter,
-      MyDialog
+      MyDialog,
+      BankChooser,
+      CheckOrder
     },
     data(){
       return{
@@ -135,6 +142,8 @@
         versions: [],
         period: {},
         price: 0,
+        bankId: null,
+        orderId: null,
         periodList: [
           {
             label: '半年',
@@ -178,7 +187,9 @@
           }
         ],
         isShowPayDialog: false,
-        isShowErrDialog: false
+        isShowErrDialog: false,
+        isShowBuyDialog: false,
+        isShowCheckOrder: false
       }
     },
     methods: {
@@ -197,12 +208,39 @@
           version: buyVersionsArray.join(',')
         }
 
-        this.axios.post('price', reqParams
+        this.axios.post('prices', reqParams
         ).then(res => {
           this.price = res.data.amount
         }).catch(err => {
             console.log(err);
         })
+      },
+      onChangeBanks(bankObj){
+        this.bankId = bankObj.id;
+      },
+      confirmBuy(){
+        let buyVersionsArray = _.map(this.versions, (item) => {
+          return item.value
+        })
+
+        let reqParams = {
+          buyNumber: this.buyNum,
+          buyType: this.buyType.value,
+          period: this.period.value,
+          version: buyVersionsArray.join(','),
+          bankId: this.bankId
+        }
+
+        this.axios.post('orders', reqParams
+          ).then(res => {
+            this.orderId = res.data.orderId
+            this.isShowCheckOrder = true
+            this.isShowPayDialog = false
+          }).catch(err => {
+            this.isShowBuyDialog = false
+            this.isShowErrDialog = true
+          })
+
       },
       showPayDialog () {
         this.isShowPayDialog = true
@@ -212,6 +250,9 @@
       },
       hideErrDialog () {
         this.isShowErrDialog = false
+      },
+      hideCheckOrder() {
+        this.isShowCheckOrder = false
       }
     },
     mounted(){
