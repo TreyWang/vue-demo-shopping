@@ -5,26 +5,13 @@ import Layout from './components/layout.vue'
 import router from './router'
 import store from './store'
 import VueAxios from 'vue-axios'
-import axios from 'axios'
+import axios from './http'
 
 
 Vue.config.productionTip = false
 
 //axios配置
 Vue.use(VueAxios, axios)
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-axios.defaults.baseURL = 'http://localhost:8081/';
-
-//POST传参序列化
-axios.interceptors.request.use((config) => {
-  if(config.method  === 'post'){
-    config.data = JSON.stringify(config.data);
-  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
-
 
 /* eslint-disable no-new */
 new Vue({
