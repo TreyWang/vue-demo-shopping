@@ -5,10 +5,8 @@ Vue.use(Vuex)
 
 const state = {
   isSuccessLogin: false,
-  loginUser:{
-    userId: '',
-    userName: ''
-  }
+  loginUser:{},
+  token: null
 }
 
 const getters = {

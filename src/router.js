@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Store from './store'
 
 //pages
 import IndexPage from './page/index.vue'
@@ -29,14 +30,36 @@ const routes = [
       {path: 'count', component: CountPage},
       {path: 'publish', component: PublishPage}
     ],
+    meta: {
+      requireAuth: true
+    },
     redirect: '/detail/count'
   },
   {path: '/orderList', component: OrderListPage},
   {path: '*', component: Error404}
 ]
 
-export default new VueRouter({
+//判断是否登录
+const router = new VueRouter({
   mode: 'history',
   base: __dirname,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requireAuth){
+    if(Store.state.token){
+      next()
+    }
+    else{
+      alert('请先登录')
+    }
+  }
+  else {
+    next();
+  }
+})
+
+export default {
+  router
+}
